@@ -16,6 +16,10 @@
     --colors-prussian-blue: #171c1f;
     --colors-blue: #8de4ff;
 
+    --colors-midnight: #0e0f12;
+    --colors-midnight-75: #181b20;
+    --colors-midnight-50: #1e222a;
+
     /* for graphs */
     --colors-text: #f1f5f2;
     --colors-text-secondary: var(--colors-offWhite);

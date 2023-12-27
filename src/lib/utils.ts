@@ -49,3 +49,58 @@ export function bounds() {
 
   return force
 }
+
+export const createMultiline = (linestring: string, name: string) => {
+  return {
+    type: "Feature",
+    properties: {
+      name,
+    },
+    geometry: {
+      type: "MultiLineString",
+      coordinates: JSON.parse(linestring),
+    },
+  }
+}
+
+export const createPoint = (lon: number, lat: number, properties: any) => {
+  return {
+    type: "Feature",
+    properties: properties,
+    geometry: {
+      type: "Point",
+      coordinates: [lon, lat],
+    },
+  }
+}
+
+export function createBoundingBox(
+  xmin: number,
+  xmax: number,
+  ymin: number,
+  ymax: number
+) {
+  return {
+    type: "Feature",
+    geometry: {
+      type: "Polygon",
+      coordinates: [
+        [
+          [xmin, ymin],
+          [xmin, ymax],
+          [xmax, ymax],
+          [xmax, ymin],
+          [xmin, ymin],
+        ],
+      ],
+    },
+  }
+}
+
+export function includesAll(arr1: string[], arr2: string[]) {
+  return arr2.every((item) => arr1.includes(item))
+}
+
+export function isIn(arr1: any[], arr2: any[]) {
+  return arr1.filter((el) => arr2.indexOf(el) > -1)
+}

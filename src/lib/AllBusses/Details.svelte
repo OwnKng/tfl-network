@@ -2,7 +2,7 @@
   import Line from "./Line.svelte"
   import { scaleLinear } from "d3-scale"
   import { max } from "d3-array"
-  import { slide, fly } from "svelte/transition"
+  import { fly } from "svelte/transition"
   import { createEventDispatcher } from "svelte"
 
   export let lineId: string
@@ -44,11 +44,11 @@
               <button
                 on:click={() => dispatch("click", { node: node.target })}
                 in:fly={{ duration: 250, y: 20, delay: index * 50 }}
-                class="px-1 relative w-full flex items-center justify-between hover:bg-zinc-800 hover:bg-opacity-20 overflow-hidden"
+                class="px-1 relative w-full flex items-center justify-between hover:bg-lightBlack hover:bg-opacity-10 overflow-hidden group"
                 style="height: 20px;"
               >
                 <div
-                  class="absolute left-0 top-0 bottom-0 shadow bg-lightBlack z-10 rounded-sm"
+                  class="absolute left-0 top-0 bottom-0 shadow bg-lightBlack z-10 rounded-sm group-hover:bg-primary transition-all"
                   style="width: {xScale(node.value)}px;"
                 />
                 <p class="z-20">
