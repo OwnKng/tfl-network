@@ -77,6 +77,6 @@
   }
 
   tr {
-    border-bottom: 1px solid theme("colors.zinc.700");
+    border-bottom: 1px solid var(--colors-midnight-25);
   }
 </style>

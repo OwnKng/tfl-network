@@ -25,6 +25,8 @@ export const drawSimulation = ({
   nodeStroke = () => "white",
   showLabels = false,
   nodeLabel = () => "",
+  nodeLabelColor = () => "white",
+  nodeLabelFont = () => "10px Source Code Pro",
 }: {
   canvas: HTMLCanvasElement
   nodes: NodeType[]
@@ -36,6 +38,8 @@ export const drawSimulation = ({
   nodeStroke?: (node: any) => string
   showLabels?: boolean
   nodeLabel?: (node: any) => string
+  nodeLabelColor?: (node: any) => string
+  nodeLabelFont?: (node: any) => string
 }) => {
   const context = canvas?.getContext("2d")
 
@@ -66,8 +70,9 @@ export const drawSimulation = ({
       context.stroke()
 
       if (showLabels) {
-        context.font = "10px Source Code Pro"
-        context.fillStyle = nodeStroke(node)
+        context.font = nodeLabelFont(node)
+
+        context.fillStyle = nodeLabelColor(node)
 
         context.textAlign = "center"
         context.textBaseline = "middle"

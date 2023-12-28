@@ -77,6 +77,8 @@
       edgeColor: (edge) => "rgba(255, 255, 255, 1)",
       nodeStroke: (node) => "#18181b",
       nodeFill: (node) => "#5de4c7",
+      nodeLabelColor: () => "#0e0f12",
+      nodeLabelFont: () => "14px Source Code Pro",
       showLabels: true,
       nodeLabel: (node) => node.id,
     })
@@ -129,6 +131,8 @@
       edgeColor: () => "#5de4c7",
       nodeStroke: () => "#292e3d",
       nodeFill: () => "#5de4c7",
+      nodeLabelColor: () => "#0e0f12",
+      nodeLabelFont: () => "14px Source Code Pro",
       showLabels: true,
       nodeLabel: (node) => node.id,
     })

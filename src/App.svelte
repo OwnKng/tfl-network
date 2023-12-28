@@ -7,8 +7,6 @@
   import Route from "./lib/Route/Route.svelte"
 </script>
 
-<main class="w-full flex flex-col gap-8 pb-8">
+<main class="w-full flex flex-col gap-8 pt-4 pb-8">
   <Busses />
-  <NetworkBuilder />
-  <Route />
 </main>

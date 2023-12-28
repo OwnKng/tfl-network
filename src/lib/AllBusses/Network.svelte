@@ -20,8 +20,8 @@
   export let links: { source: string; target: string; value: number }[] = []
   export let selectedNode: string | null = null
 
-  $: nodesCopy = nodes.map((d) => ({ ...d }))
-  $: linksCopy = links.map((d) => ({ ...d }))
+  let nodesCopy = []
+  let linksCopy = []
 
   let canvas: HTMLCanvasElement
 
@@ -54,7 +54,10 @@
     [1, 5]
   )
 
-  function createSimulation(nodes, edges) {
+  const createSimulation = (nodes, edges) => {
+    const _N = nodes.map((n) => ({ ...n }))
+    const _E = edges.map((e) => ({ ...e }))
+
     const simulation = forceSimulation(nodes)
       .force(
         "link",
@@ -80,10 +83,10 @@
         "center",
         forceCenter(dimensions.innerWidth / 2, dimensions.innerHeight / 2)
       )
-      .tick(250)
       .stop()
+      .tick(300)
 
-    return [nodes, edges, simulation]
+    return [nodes, edges]
   }
 
   let voronoi: any | null = null
@@ -124,7 +127,7 @@
 
   const dispatch = createEventDispatcher()
 
-  function handleClick(event: MouseEvent) {
+  $: handleClick = (event: MouseEvent) => {
     if (!voronoi) return null
 
     const x = event.offsetX - dimensions.margins.left
@@ -145,14 +148,20 @@
       edgeWidth: (d) => widthScale(getValue(d)),
       nodeRadius: (d) => radiusScale(getConnections(d)),
       edgeColor: () => "#5de4c7",
-      nodeStroke: () => "#292e3d",
+      nodeStroke: () => "#24282f",
+      nodeFill: () => "#5de4c7",
+      nodeLabelColor: () => "#0e0f12",
       showLabels: true,
       nodeLabel: (node) => node.id,
     })
   }
 
   onMount(() => {
-    const [_N, _E] = createSimulation(nodesCopy, linksCopy)
+    const [_N, _E] = createSimulation(nodes, links)
+
+    nodesCopy = _N
+    linksCopy = _E
+
     drawSimulation({
       canvas: canvas,
       nodes: _N,
@@ -160,14 +169,43 @@
       edgeColor: (d) => "rgba(255, 255, 255, 0.025)",
       edgeWidth: (d) => widthScale(getValue(d)),
       nodeRadius: (d) => radiusScale(getConnections(d)),
-      nodeStroke: () => "#292e3d",
+      nodeStroke: () => "#24282f",
+      nodeFill: () => "#DCDDE5",
+      nodeLabelColor: () => "#0e0f12",
       showLabels: true,
       nodeLabel: (node) => (getConnections(node) > 50 ? node.id : ""),
     })
 
     voronoi = Delaunay.from(_N.map(({ x, y }) => [x, y]))
   })
+
+  function handleResize() {
+    const [_N, _E] = createSimulation(nodes, links)
+
+    nodesCopy = _N
+    linksCopy = _E
+
+    drawSimulation({
+      canvas: canvas,
+      nodes: _N,
+      edges: _E,
+      edgeColor: (d) => "rgba(255, 255, 255, 0.025)",
+      edgeWidth: (d) => widthScale(getValue(d)),
+      nodeRadius: (d) => radiusScale(getConnections(d)),
+      nodeStroke: () => "#24282f",
+      nodeFill: () => "#DCDDE5",
+      nodeLabelColor: () => "#0e0f12",
+      showLabels: true,
+      nodeLabel: (node) => (getConnections(node) > 50 ? node.id : ""),
+    })
+
+    console.log("resized")
+
+    voronoi = Delaunay.from(_N.map(({ x, y }) => [x, y]))
+  }
 </script>
+
+<svelte:window on:resize={handleResize} />
 
 <div class="w-full h-full">
   <div
@@ -177,17 +215,17 @@
   >
     <canvas
       on:mousemove={handleMouseOver}
-      {width}
-      {height}
+      width={dimensions.width}
+      height={dimensions.height}
       bind:this={canvas}
       on:mouseleave={handleMouseLeave}
       style="opacity: {highlighted ? 0.5 : 1.0}"
-      class="transition-all cursor-pointer"
+      class="transition-all cursor-pointer border"
       on:click={handleClick}
     />
     <canvas
-      {width}
-      {height}
+      width={dimensions.width}
+      height={dimensions.height}
       bind:this={highlightedCanvas}
       id="tooltip"
       style="opacity: {highlighted ? 1.0 : 0.0}"
