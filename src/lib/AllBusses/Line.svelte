@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { onMount } from "svelte"
   import { getLine } from "../tfl"
 
   export let lineId: string

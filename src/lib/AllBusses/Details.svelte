@@ -3,7 +3,7 @@
   import { scaleLinear } from "d3-scale"
   import { max } from "d3-array"
   import { fly } from "svelte/transition"
-  import { createEventDispatcher } from "svelte"
+  import { createEventDispatcher, afterUpdate } from "svelte"
 
   export let lineId: string
   export let edges: { source: string; target: string; value: number }[] = []
@@ -17,6 +17,12 @@
     .range([0, w])
 
   const dispatch = createEventDispatcher()
+
+  let graphContainer: HTMLDivElement
+
+  afterUpdate(() => {
+    graphContainer.scrollTo({ top: 0 })
+  })
 </script>
 
 <div class="flex flex-col h-full gap-4">
@@ -38,11 +44,9 @@
         <h4 class="text-sm">Shared stops per route</h4>
         <div class="w-full h-full relative">
           <div
-            class="absolute bottom-0 left-0 right-0 z-40 h-6 bg-gradient-to-t from-midnight-75"
-          />
-          <div
             class="w-full h-[400px] relative overflow-y-auto"
             bind:clientWidth={w}
+            bind:this={graphContainer}
           >
             <div class="w-full flex flex-col gap-[2px] Chart">
               {#each ordered as node, index (Math.random())}
