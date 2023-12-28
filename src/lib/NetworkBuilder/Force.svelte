@@ -59,7 +59,7 @@
     .force("charge", forceManyBody())
     .force(
       "collide",
-      forceCollide().radius((d) => radiusScale(d.connections) + 8)
+      forceCollide().radius((d) => radiusScale(d.connections) + 6)
     )
     .force("x", forceX(dimensions.innerWidth / 2))
     .force("y", forceY(dimensions.innerHeight / 2))
