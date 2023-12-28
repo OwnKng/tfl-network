@@ -3,25 +3,23 @@
     forceSimulation,
     forceLink,
     forceManyBody,
-    forceCenter,
     forceX,
     forceY,
     forceCollide,
   } from "d3-force"
   import { scaleSqrt } from "d3-scale"
   import { min, max } from "d3-array"
-  import { onMount } from "svelte"
   import { Delaunay } from "d3-delaunay"
   import { bounds } from "../utils"
   import { drawSimulation } from "../simulation"
-  import { createEventDispatcher } from "svelte"
+  import { createEventDispatcher, onMount } from "svelte"
 
   export let nodes: { id: string; connections: number }[] = []
   export let links: { source: string; target: string; value: number }[] = []
   export let selectedNode: string | null = null
 
-  let nodesCopy = []
-  let linksCopy = []
+  let nodesCopy: any[] = []
+  let linksCopy: any[] = []
 
   let canvas: HTMLCanvasElement
 
@@ -49,26 +47,23 @@
 
   $: radiusScale = scaleSqrt([1, max(nodes, getConnections)], [2, 12])
 
-  $: widthScale = scaleSqrt(
-    [min(links.map(getValue)), max(links.map(getValue))],
-    [1, 5]
-  )
+  $: widthScale = scaleSqrt([1, max(links.map(getValue))], [1, 12])
 
-  const createSimulation = (nodes, edges) => {
+  $: createSimulation = () => {
     const _N = nodes.map((n) => ({ ...n }))
-    const _E = edges.map((e) => ({ ...e }))
+    const _E = links.map((e) => ({ ...e }))
 
-    const simulation = forceSimulation(nodes)
+    const simulation = forceSimulation(_N)
+      .force("charge", forceManyBody())
       .force(
         "link",
-        forceLink(edges).id((d) => d.id)
+        forceLink(_E)
+          .id((d) => d.id)
+          .distance(0)
       )
-      .force("charge", forceManyBody())
-      .force("x", forceX())
-      .force("y", forceY())
       .force(
         "collide",
-        forceCollide((d) => radiusScale(getConnections(d)) + 1)
+        forceCollide((d) => radiusScale(getConnections(d)) + 0.2)
       )
       .force(
         "bounds",
@@ -79,14 +74,11 @@
           .maxY(dimensions.innerHeight)
           .padding(20)
       )
-      .force(
-        "center",
-        forceCenter(dimensions.innerWidth / 2, dimensions.innerHeight / 2)
-      )
+      .force("x", forceX(dimensions.innerWidth / 2))
+      .force("y", forceY(dimensions.innerHeight / 2))
       .stop()
-      .tick(300)
 
-    return [nodes, edges]
+    return [_N, _E, simulation]
   }
 
   let voronoi: any | null = null
@@ -127,7 +119,7 @@
 
   const dispatch = createEventDispatcher()
 
-  $: handleClick = (event: MouseEvent) => {
+  function handleClick(event: MouseEvent, nodes: any[]) {
     if (!voronoi) return null
 
     const x = event.offsetX - dimensions.margins.left
@@ -135,7 +127,7 @@
 
     const index = voronoi.find(x, y)
 
-    const id = getId(nodesCopy[index])
+    const id = getId(nodes[index])
 
     dispatch("click", { node: id })
   }
@@ -157,10 +149,14 @@
   }
 
   onMount(() => {
-    const [_N, _E] = createSimulation(nodes, links)
+    const [_N, _E, simulation] = createSimulation()
+    simulation.tick(150)
 
-    nodesCopy = _N
-    linksCopy = _E
+    canvas.width = dimensions.innerWidth
+    canvas.height = dimensions.innerHeight
+
+    highlightedCanvas.width = dimensions.innerWidth
+    highlightedCanvas.height = dimensions.innerHeight
 
     drawSimulation({
       canvas: canvas,
@@ -177,37 +173,13 @@
     })
 
     voronoi = Delaunay.from(_N.map(({ x, y }) => [x, y]))
+
+    nodesCopy = _N
+    linksCopy = _E
   })
-
-  function handleResize() {
-    const [_N, _E] = createSimulation(nodes, links)
-
-    nodesCopy = _N
-    linksCopy = _E
-
-    drawSimulation({
-      canvas: canvas,
-      nodes: _N,
-      edges: _E,
-      edgeColor: (d) => "rgba(255, 255, 255, 0.025)",
-      edgeWidth: (d) => widthScale(getValue(d)),
-      nodeRadius: (d) => radiusScale(getConnections(d)),
-      nodeStroke: () => "#24282f",
-      nodeFill: () => "#DCDDE5",
-      nodeLabelColor: () => "#0e0f12",
-      showLabels: true,
-      nodeLabel: (node) => (getConnections(node) > 50 ? node.id : ""),
-    })
-
-    console.log("resized")
-
-    voronoi = Delaunay.from(_N.map(({ x, y }) => [x, y]))
-  }
 </script>
 
-<svelte:window on:resize={handleResize} />
-
-<div class="w-full h-full">
+<div class="w-full h-full overflow-hidden">
   <div
     class="w-full h-full relative"
     bind:clientWidth={width}
@@ -215,21 +187,17 @@
   >
     <canvas
       on:mousemove={handleMouseOver}
-      width={dimensions.width}
-      height={dimensions.height}
       bind:this={canvas}
       on:mouseleave={handleMouseLeave}
       style="opacity: {highlighted ? 0.5 : 1.0}"
-      class="transition-all cursor-pointer border"
-      on:click={handleClick}
+      class="transition-opacity cursor-pointer"
+      on:click={(e) => handleClick(e, nodesCopy)}
     />
     <canvas
-      width={dimensions.width}
-      height={dimensions.height}
       bind:this={highlightedCanvas}
       id="tooltip"
       style="opacity: {highlighted ? 1.0 : 0.0}"
-      class="transition-all"
+      class="transition-opacity"
     />
   </div>
 </div>

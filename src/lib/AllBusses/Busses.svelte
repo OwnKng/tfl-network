@@ -54,9 +54,9 @@
 <section
   class="w-full mx-auto px-4 bg-midnight-75 border-t border-b border-midnight-50"
 >
-  <div class="flex flex-col gap-2 px-4 py-2 max-w-dashboard">
+  <div class="flex flex-col gap-2 py-2 max-w-dashboard">
     <h2 class="text-3xl font-bold">Connectivity of London bus routes</h2>
-    <div class="h-screen grid grid-cols-8 gap-4">
+    <div class="flex flex-col gap-2 xl:grid xl:grid-cols-8 xl:gap-4">
       <div class="col-span-6 h-screen">
         <Network {nodes} links={edges} {selectedNode} on:click={handleClick} />
       </div>
@@ -70,7 +70,7 @@
             <div class="relative flex justify-between items-center">
               <input
                 use:melt={$input}
-                class="flex w-full py-4 px-2 w-full items-center justify-between focus:outline-none bg-midnight-50 border border-midnight-25 rounded"
+                class="flex w-full py-4 px-2 w-full items-center justify-between focus:outline-none bg-midnight-50 border border-midnight-25 rounded caret-primary carat-2"
                 placeholder="Select a bus route"
               />
               {#if $selected}

@@ -63,6 +63,7 @@
 <style lang="postcss">
   table {
     overflow: hidden;
+    table-layout: fixed;
   }
 
   th {
