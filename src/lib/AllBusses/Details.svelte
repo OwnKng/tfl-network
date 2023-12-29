@@ -3,7 +3,7 @@
   import { scaleLinear } from "d3-scale"
   import { max } from "d3-array"
   import { fly } from "svelte/transition"
-  import { createEventDispatcher } from "svelte"
+  import { createEventDispatcher, afterUpdate } from "svelte"
 
   export let lineId: string
   export let edges: { source: string; target: string; value: number }[] = []
@@ -17,18 +17,22 @@
     .range([0, w])
 
   const dispatch = createEventDispatcher()
+
+  let graphContainer: HTMLDivElement
+
+  afterUpdate(() => {
+    graphContainer.scrollTo({ top: 0 })
+  })
 </script>
 
 <div class="flex flex-col h-full gap-4">
   <Line {lineId} />
-  <div
-    class="flex flex-col gap-2 border border-zinc-700 rounded py-1 divide-y divide-zinc-700"
-  >
-    <div class="px-2">
+  <div class="flex flex-col gap-2 rounded py-1">
+    <div>
       <h3 class="text-white">Connectivity</h3>
     </div>
     <div class="flex flex-col gap-2">
-      <div class="px-2">
+      <div>
         <p class="text-xs">
           <span class="text-white text-lg">
             {edges.length}
@@ -37,31 +41,43 @@
         </p>
       </div>
       <div>
-        <h4 class="text-sm px-2">Shared stops per route</h4>
-        <div class="w-full h-[400px] overflow-y-auto" bind:clientWidth={w}>
-          <div class="w-full flex flex-col gap-[2px] px-2">
-            {#each ordered as node, index (Math.random())}
-              <button
-                on:click={() => dispatch("click", { node: node.target })}
-                in:fly={{ duration: 250, y: 20, delay: index * 50 }}
-                class="px-1 relative w-full flex items-center justify-between hover:bg-lightBlack hover:bg-opacity-10 overflow-hidden group"
-                style="height: 20px;"
-              >
-                <div
-                  class="absolute left-0 top-0 bottom-0 shadow bg-lightBlack z-10 rounded-sm group-hover:bg-primary transition-all"
-                  style="width: {xScale(node.value)}px;"
-                />
-                <p class="z-20">
-                  {node.target}
-                </p>
-                <p class="z-20">
-                  {node.value}
-                </p>
-              </button>
-            {/each}
+        <h4 class="text-sm">Shared stops per route</h4>
+        <div class="w-full h-full relative">
+          <div
+            class="w-full h-[400px] relative overflow-y-auto"
+            bind:clientWidth={w}
+            bind:this={graphContainer}
+          >
+            <div class="w-full flex flex-col gap-[2px] Chart">
+              {#each ordered as node, index (Math.random())}
+                <button
+                  on:click={() => dispatch("click", { node: node.target })}
+                  in:fly={{ duration: 250, y: 20, delay: index * 50 }}
+                  class="px-1 relative w-full flex items-center justify-between overflow-hidden group"
+                  style="height: 30px;"
+                >
+                  <div
+                    class="absolute left-0 top-0 bottom-0 shadow bg-midnight-50 z-10 rounded transition-all group-hover:bg-midnight-25"
+                    style="width: {xScale(node.value)}px;"
+                  />
+                  <p class="z-20">
+                    {node.target}
+                  </p>
+                  <p class="z-20">
+                    {node.value}
+                  </p>
+                </button>
+              {/each}
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<style>
+  .Chart {
+    font-family: Source Code Pro;
+  }
+</style>

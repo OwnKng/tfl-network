@@ -13,10 +13,14 @@ export default {
       },
       maxWidth: {
         dashboard: "1380px",
+        page: "1230px",
+        content: "720px",
       },
       height: {
         graph: "500px",
-        map: "600px",
+        map: "800px",
+        facet: "280px",
+        "graph-sm": "380px",
       },
     },
   },

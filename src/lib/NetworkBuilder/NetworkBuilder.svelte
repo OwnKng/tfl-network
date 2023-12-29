@@ -86,12 +86,14 @@
   }
 </script>
 
-<div class="w-full px-4 py-4 w-full max-w-dashboard rounded shadow mx-auto">
-  <GraphPaper>
-    <div class="flex flex-col gap-1">
-      <!-- svelte-ignore a11y-label-has-associated-control - $label contains the 'for' attribute -->
-      <label class="sr-only" use:melt={$label}> Select route </label>
-      <div class="relative w-full">
+<div
+  class="w-full pt-4 w-full bg-midnight-75 border-t border-b border-midnight-25 rounded shadow mx-auto"
+>
+  <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-2">
+      <div class="relative w-full px-4">
+        <!-- svelte-ignore a11y-label-has-associated-control - $label contains the 'for' attribute -->
+        <label class="sr-only" use:melt={$label}> Select route </label>
         <div class="flex bg-midnight-50 rounded shadow px-1 flex-wrap">
           <div class="flex gap-2 flex-wrap">
             {#each $selected as node, index (index)}
@@ -112,39 +114,41 @@
           />
         </div>
       </div>
-    </div>
-    {#if $open}
-      <ul
-        class="z-10 flex max-h-[300px] flex-col overflow-hidden rounded-md shadow-lg bg-midnight-75 divide-y divide-midnight-50 border border-midnight-50"
-        use:melt={$menu}
-        transition:fly={{ duration: 150, y: -5 }}
-      >
-        <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-        <div class="flex max-h-full flex-col overflow-y-auto" tabindex="0">
-          {#each searchedNodes as node, index (index)}
-            <li
-              use:melt={$option({
-                value: node.id,
-                label: node.id,
-              })}
-              class="relative cursor-pointer data-[highlighted]:bg-midnight-50 data-[disabled]:opacity-50"
-            >
-              {#if $selected.map((d) => d.value).includes(node.id)}
-                <div class="py-2 px-2 bg-midnight-50 w-full">
-                  {node.id}
-                </div>
-              {:else}
-                <div class="py-2 px-2 w-full">{node.id}</div>
-              {/if}
-            </li>
-          {/each}
-        </div>
-      </ul>
-    {/if}
-    <div class="w-full h-map">
-      {#if filteredNodes.length > 0}
-        <Force nodes={filteredNodes} links={filteredEdges} />
+      {#if $open}
+        <ul
+          class="z-10 flex max-h-[300px] flex-col overflow-hidden rounded-md shadow-lg bg-midnight-75 divide-y divide-midnight-25 border border-midnight-50"
+          use:melt={$menu}
+          transition:fly={{ duration: 150, y: -5 }}
+        >
+          <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+          <div class="flex max-h-full flex-col overflow-y-auto" tabindex="0">
+            {#each searchedNodes as node, index (index)}
+              <li
+                use:melt={$option({
+                  value: node.id,
+                  label: node.id,
+                })}
+                class="relative cursor-pointer data-[highlighted]:bg-midnight-50 data-[disabled]:opacity-50"
+              >
+                {#if $selected.map((d) => d.value).includes(node.id)}
+                  <div class="py-2 px-2 bg-midnight-50 w-full">
+                    {node.id}
+                  </div>
+                {:else}
+                  <div class="py-2 px-2 w-full">{node.id}</div>
+                {/if}
+              </li>
+            {/each}
+          </div>
+        </ul>
       {/if}
     </div>
-  </GraphPaper>
+    <GraphPaper>
+      <div class="w-full h-map border-t border-midnight-25">
+        {#if filteredNodes.length > 0}
+          <Force nodes={filteredNodes} links={filteredEdges} />
+        {/if}
+      </div>
+    </GraphPaper>
+  </div>
 </div>

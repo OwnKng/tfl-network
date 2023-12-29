@@ -3,25 +3,23 @@
     forceSimulation,
     forceLink,
     forceManyBody,
-    forceCenter,
     forceX,
     forceY,
     forceCollide,
   } from "d3-force"
   import { scaleSqrt } from "d3-scale"
   import { min, max } from "d3-array"
-  import { onMount } from "svelte"
   import { Delaunay } from "d3-delaunay"
   import { bounds } from "../utils"
   import { drawSimulation } from "../simulation"
-  import { createEventDispatcher } from "svelte"
+  import { createEventDispatcher, onMount } from "svelte"
 
   export let nodes: { id: string; connections: number }[] = []
   export let links: { source: string; target: string; value: number }[] = []
   export let selectedNode: string | null = null
 
-  $: nodesCopy = nodes.map((d) => ({ ...d }))
-  $: linksCopy = links.map((d) => ({ ...d }))
+  let nodesCopy: any[] = []
+  let linksCopy: any[] = []
 
   let canvas: HTMLCanvasElement
 
@@ -49,23 +47,23 @@
 
   $: radiusScale = scaleSqrt([1, max(nodes, getConnections)], [2, 12])
 
-  $: widthScale = scaleSqrt(
-    [min(links.map(getValue)), max(links.map(getValue))],
-    [1, 5]
-  )
+  $: widthScale = scaleSqrt([1, max(links.map(getValue))], [1, 12])
 
-  function createSimulation(nodes, edges) {
-    const simulation = forceSimulation(nodes)
+  $: createSimulation = () => {
+    const _N = nodes.map((n) => ({ ...n }))
+    const _E = links.map((e) => ({ ...e }))
+
+    const simulation = forceSimulation(_N)
+      .force("charge", forceManyBody())
       .force(
         "link",
-        forceLink(edges).id((d) => d.id)
+        forceLink(_E)
+          .id((d) => d.id)
+          .distance(0)
       )
-      .force("charge", forceManyBody())
-      .force("x", forceX())
-      .force("y", forceY())
       .force(
         "collide",
-        forceCollide((d) => radiusScale(getConnections(d)) + 1)
+        forceCollide((d) => radiusScale(getConnections(d)) + 0.2)
       )
       .force(
         "bounds",
@@ -76,14 +74,11 @@
           .maxY(dimensions.innerHeight)
           .padding(20)
       )
-      .force(
-        "center",
-        forceCenter(dimensions.innerWidth / 2, dimensions.innerHeight / 2)
-      )
-      .tick(250)
+      .force("x", forceX(dimensions.innerWidth / 2))
+      .force("y", forceY(dimensions.innerHeight / 2))
       .stop()
 
-    return [nodes, edges, simulation]
+    return [_N, _E, simulation]
   }
 
   let voronoi: any | null = null
@@ -124,7 +119,7 @@
 
   const dispatch = createEventDispatcher()
 
-  function handleClick(event: MouseEvent) {
+  function handleClick(event: MouseEvent, nodes: any[]) {
     if (!voronoi) return null
 
     const x = event.offsetX - dimensions.margins.left
@@ -132,7 +127,7 @@
 
     const index = voronoi.find(x, y)
 
-    const id = getId(nodesCopy[index])
+    const id = getId(nodes[index])
 
     dispatch("click", { node: id })
   }
@@ -144,15 +139,25 @@
       edges: highlighted.edges,
       edgeWidth: (d) => widthScale(getValue(d)),
       nodeRadius: (d) => radiusScale(getConnections(d)),
-      edgeColor: () => "#5de4c7",
-      nodeStroke: () => "#292e3d",
+      edgeColor: () => "#ef4444",
+      nodeStroke: () => "#24282f",
+      nodeFill: () => "#f87171",
+      nodeLabelColor: () => "#0e0f12",
       showLabels: true,
       nodeLabel: (node) => node.id,
     })
   }
 
   onMount(() => {
-    const [_N, _E] = createSimulation(nodesCopy, linksCopy)
+    const [_N, _E, simulation] = createSimulation()
+    simulation.tick(150)
+
+    canvas.width = dimensions.innerWidth
+    canvas.height = dimensions.innerHeight
+
+    highlightedCanvas.width = dimensions.innerWidth
+    highlightedCanvas.height = dimensions.innerHeight
+
     drawSimulation({
       canvas: canvas,
       nodes: _N,
@@ -160,16 +165,21 @@
       edgeColor: (d) => "rgba(255, 255, 255, 0.025)",
       edgeWidth: (d) => widthScale(getValue(d)),
       nodeRadius: (d) => radiusScale(getConnections(d)),
-      nodeStroke: () => "#292e3d",
+      nodeStroke: () => "#1f2937",
+      nodeFill: () => "#d1d5db",
+      nodeLabelColor: () => "#0e0f12",
       showLabels: true,
       nodeLabel: (node) => (getConnections(node) > 50 ? node.id : ""),
     })
 
     voronoi = Delaunay.from(_N.map(({ x, y }) => [x, y]))
+
+    nodesCopy = _N
+    linksCopy = _E
   })
 </script>
 
-<div class="w-full h-full">
+<div class="w-full h-full overflow-hidden">
   <div
     class="w-full h-full relative"
     bind:clientWidth={width}
@@ -177,21 +187,17 @@
   >
     <canvas
       on:mousemove={handleMouseOver}
-      {width}
-      {height}
       bind:this={canvas}
       on:mouseleave={handleMouseLeave}
       style="opacity: {highlighted ? 0.5 : 1.0}"
-      class="transition-all cursor-pointer"
-      on:click={handleClick}
+      class="transition-opacity cursor-pointer"
+      on:click={(e) => handleClick(e, nodesCopy)}
     />
     <canvas
-      {width}
-      {height}
       bind:this={highlightedCanvas}
       id="tooltip"
       style="opacity: {highlighted ? 1.0 : 0.0}"
-      class="transition-all"
+      class="transition-opacity"
     />
   </div>
 </div>

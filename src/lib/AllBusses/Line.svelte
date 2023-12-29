@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { onMount } from "svelte"
   import { getLine } from "../tfl"
 
   export let lineId: string
@@ -63,6 +62,7 @@
 <style lang="postcss">
   table {
     overflow: hidden;
+    table-layout: fixed;
   }
 
   th {
@@ -77,6 +77,6 @@
   }
 
   tr {
-    border-bottom: 1px solid theme("colors.zinc.700");
+    border-bottom: 1px solid var(--colors-midnight-25);
   }
 </style>

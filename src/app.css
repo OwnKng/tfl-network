@@ -12,13 +12,14 @@
     --colors-uranus: #abd2fa;
     --colors-jasmine: #ffd275;
     --colors-emerald: #3ddc97;
-    --colors-primary: #5de4c7;
+    --colors-primary: #ef4444;
     --colors-prussian-blue: #171c1f;
     --colors-blue: #8de4ff;
 
-    --colors-midnight: #0e0f12;
-    --colors-midnight-75: #181b20;
-    --colors-midnight-50: #1e222a;
+    --colors-midnight: #030712;
+    --colors-midnight-75: #030712;
+    --colors-midnight-50: #111827;
+    --colors-midnight-25: #1f2937;
 
     /* for graphs */
     --colors-text: #f1f5f2;
@@ -36,6 +37,42 @@
 
 body {
   font-family: "Nunito", sans-serif;
-  background-color: #0e0f13;
+  background-color: var(--colors-midnight);
   color: var(--colors-text);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-weight: bold;
+  color: var(--colors-heading);
+}
+
+.Axis line {
+  stroke: var(--colors-text);
+}
+
+.Grid line {
+  stroke: var(--colors-midnight-50);
+}
+
+.Axis text {
+  fill: var(--colors-text);
+  stroke: var(--colors-background);
+  paint-order: stroke;
+  font-size: 12px;
+}
+
+.Chart text {
+  font-family: "Source Code Pro", monospace;
+}
+
+.Panel rect {
+  fill: var(--colors-midnight-50);
+}
+
+.Panel line {
+  stroke: var(--colors-grid);
 }
