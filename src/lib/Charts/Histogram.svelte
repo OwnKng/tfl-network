@@ -1,12 +1,12 @@
 <script lang="ts">
   import Chart from "../primatives/Chart.svelte"
   import { scaleLinear } from "d3-scale"
-
   import { max, bin, sum } from "d3-array"
   import AxisBottom from "../primatives/AxisBottom.svelte"
   import Axis from "../primatives/Axis.svelte"
   import Grid from "../primatives/Grid.svelte"
   import Gradient from "../primatives/Gradient.svelte"
+  import { draw, fly, slide, fade } from "svelte/transition"
 
   export let data: any[] = []
   export let x: string
@@ -15,9 +15,9 @@
   export let yFormat = (d: any) => d
   export let selected: string | null = null
   export let label = "id"
-  export let gradientColors = ["#fca5a5", "#f87171", "#ef4444"]
+  export let gradientColors = ["#f87171", "#ef4444"]
 
-  const gradientId = crypto.getRandomValues(new Uint32Array(1))[0]
+  const gradientId = crypto.randomUUID()
 
   let w = 0
   let h = 0
@@ -45,20 +45,21 @@
     .clamp(true)
 
   $: bins = bin().value(getX).thresholds(20)(data)
-  $: lengths = bins.map((bin) => bin.length)
 
   $: yMax = percent ? sum(bins.map((bin) => bin.length)) : 1
 
   $: yScale = scaleLinear([0, 0.22], [dimensions.innerHeight, 0]).nice()
+
+  // Interaction
+  $: selectedX = selected ? getX(data.find((d) => getLabel(d) === selected)) : 0
 </script>
 
-<div class="w-full h-full" bind:clientHeight={h} bind:clientWidth={w}>
+<div class="w-full h-full relative" bind:clientHeight={h} bind:clientWidth={w}>
   {#if w > 100}
     <Chart {dimensions}>
       <defs>
         <Gradient id={gradientId} colors={gradientColors} y2="0" x2="100%" />
       </defs>
-
       <Grid orientation="y" scale={yScale} />
       {#each bins as bin}
         <rect
@@ -82,5 +83,22 @@
         bottom={-5}
       />
     </Chart>
+    <div
+      class="absolute Tooltip"
+      transition:slide={{ duration: 150 }}
+      style="left: {xScale(selectedX) +
+        margins.left}px; height: {dimensions.innerHeight}px; top: {margins.top}px; opacity: {selected
+        ? 1
+        : 0};"
+    />
   {/if}
 </div>
+
+<style>
+  .Tooltip {
+    transition: all 250ms ease-in-out;
+    pointer-events: none;
+    width: 1px;
+    background: var(--colors-white);
+  }
+</style>

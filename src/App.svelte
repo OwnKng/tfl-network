@@ -7,7 +7,7 @@
   import Histograms from "./lib/Histograms/Histograms.svelte"
 </script>
 
-<div class="text-gray-400 py-2 pb-8">
+<div class="text-gray-300 pt-4 pb-8">
   <nav class="w-full px-4">
     <div class="max-w-page mx-auto">
       <a class="text-xl font-bold text-white" href="https://www.ownkng.dev/"
@@ -15,7 +15,7 @@
       >
     </div>
   </nav>
-  <header class="max-w-content mx-auto px-4 py-4 flex flex-col gap-4">
+  <header class="max-w-content mx-auto px-4 pb-4 pt-12 flex flex-col gap-4">
     <h1 class="text-4xl md:text-6xl">How are London's busses connected?</h1>
     <p class="text-2xl">A network analysis of bus routes</p>
   </header>
@@ -34,7 +34,12 @@
   </article>
   <main class="w-full flex flex-col gap-8 pt-4 pb-8">
     <Busses />
-    <div>
+    <div class="flex flex-col gap-2">
+      <p class="w-full mx-auto w-full max-w-content">
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </p>
       <p class="w-full mx-auto w-full max-w-content">
         Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
         dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non

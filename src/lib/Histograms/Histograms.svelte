@@ -31,13 +31,13 @@
       <div class="flex flex-col gap-1">
         <!-- svelte-ignore a11y-label-has-associated-control - $label contains the 'for' attribute -->
         <label use:melt={$label}>
-          <span class="sr-only">Select a bus route</span>
+          <span class="sr-only">Highlight a bus route</span>
         </label>
         <div class="relative flex justify-between items-center">
           <input
             use:melt={$input}
             class="flex w-full py-3 px-2 w-full items-center justify-between focus:outline-none bg-midnight-50 border border-midnight-25 rounded caret-primary carat-2"
-            placeholder="Select a bus route"
+            placeholder="Highlight a bus route"
           />
           {#if $selected}
             <button
@@ -57,7 +57,7 @@
         >
           <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
           <div
-            class="flex max-h-full flex-col gap-0 overflow-y-auto bg-midnight-50 py-2 rounded shadow divide-y divide-midnight-25 border border-midnight-25"
+            class="flex max-h-full flex-col gap-0 overflow-y-auto bg-midnight-50 rounded shadow divide-y divide-midnight-25 border border-midnight-25"
             tabindex="0"
           >
             {#each filtered as node, index (index)}
@@ -81,7 +81,7 @@
     </div>
     <div class="w-full h-full grid grid-cols-3 mx-auto gap-4">
       <div class="w-full">
-        <h2 class="text-sm">Number of stops per route</h2>
+        <h2 class="text-sm ml-[10px]">Number of stops</h2>
         <div class="w-full h-facet">
           <Histogram
             data={routes}
@@ -93,9 +93,7 @@
         </div>
       </div>
       <div class="col-span-1 row-span-1">
-        <h2 class="text-sm">
-          Share of stops that are shared with another route
-        </h2>
+        <h2 class="text-sm ml-[10px]">Shared of shared stops</h2>
         <div class="w-full h-facet">
           <Histogram
             data={routes}
@@ -108,7 +106,7 @@
         </div>
       </div>
       <div class="col-span-1 row-span-1">
-        <h2 class="text-sm">Number of partner routes</h2>
+        <h2 class="text-sm ml-[10px]">Number of connected routes</h2>
         <div class="w-full h-facet">
           <Histogram
             data={routes}
