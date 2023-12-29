@@ -51,7 +51,7 @@ h5 {
 }
 
 .Axis line {
-  stroke: var(--colors-text);
+  stroke: var(--colors-midnight-50);
 }
 
 .Grid line {

@@ -52,10 +52,6 @@
         {/if}
       </td>
     </tr>
-    <tr>
-      <th># stops</th>
-      <td>-</td>
-    </tr>
   </tbody>
 </table>
 

@@ -12,14 +12,14 @@ export default {
         "midnight-25": "var(--colors-midnight-25)",
       },
       maxWidth: {
-        dashboard: "1380px",
+        dashboard: "1230px",
         page: "1230px",
         content: "720px",
       },
       height: {
         graph: "500px",
-        map: "800px",
-        facet: "280px",
+        map: "720px",
+        facet: "240px",
         "graph-sm": "380px",
       },
     },
