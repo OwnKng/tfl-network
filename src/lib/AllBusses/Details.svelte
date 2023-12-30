@@ -25,7 +25,7 @@
   })
 </script>
 
-<div class="flex flex-col gap-2 h-map">
+<div class="flex flex-col gap-2">
   <Line {lineId} />
   <div class="flex flex-col gap-2 row-span-4">
     <h4 class="text-sm">Shared stops per route</h4>

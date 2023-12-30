@@ -65,6 +65,9 @@
   class="w-full mx-auto px-4 border-t py-4 bg-midnight-75 border-b border-midnight-50 flex flex-col gap-4 mb-4"
 >
   <div class="w-full max-w-dashboard mx-auto flex flex-col gap-4 py-6">
+    <h2 class="mt-0 max-w-content mx-auto w-full text-lg">
+      Connections between London bus routes
+    </h2>
     <div class="w-full sticky top-2 z-50 max-w-content mx-auto shadow-md">
       <div class="relative flex justify-between items-center">
         <!-- svelte-ignore a11y-label-has-associated-control - $label contains the 'for' attribute -->

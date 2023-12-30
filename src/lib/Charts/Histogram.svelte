@@ -65,7 +65,7 @@
   $: selectedX = selected ? getX(data.find((d) => getLabel(d) === selected)) : 0
 </script>
 
-<div class="w-full h-full flex flex-col gap-2">
+<div class="w-full h-full flex flex-col gap-1">
   <div class="flex justify-between items-center w-full text-sm font-bold">
     <h4 style="margin-left: {dimensions.margins.left}px;">
       {title}

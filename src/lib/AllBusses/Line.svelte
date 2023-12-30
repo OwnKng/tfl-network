@@ -5,53 +5,38 @@
 
   let origin: string
   let destination: string
-  let loading = false
-  let err = false
-
-  async function getStartEnd(id: string) {
-    loading = true
-    try {
-      const route = await getLine(id)
-      origin = route[0]
-      destination = route[1]
-    } catch (e) {
-      err = true
-    } finally {
-      loading = false
-    }
-  }
-
-  $: {
-    getStartEnd(lineId)
-  }
 </script>
 
 <table class="w-full text-sm">
   <tbody>
-    <tr>
-      <th>Origin</th>
-      <td>
-        {#if loading}
-          <span class="pulse">loading...</span>
-        {:else if origin}
-          {origin}
-        {:else if err}
-          -
-        {/if}
-      </td>
-    </tr>
-    <tr>
-      <th>Destination</th>
-      <td>
-        {#if loading}
-          <span class="pulse">loading...</span>
-        {:else if destination}
-          {destination}
-        {:else if err}
-          -
-        {/if}
-      </td>
-    </tr>
+    {#await getLine(lineId)}
+      <tr>
+        <th>From</th>
+        <td>Loading</td>
+      </tr>
+      <tr>
+        <th>To</th>
+        <td>Loading</td>
+      </tr>
+    {:then [origin, destination]}
+      <tr>
+        <th>From</th>
+        <td>{origin}</td>
+      </tr>
+      <tr>
+        <th>To</th>
+        <td>{destination}</td>
+      </tr>
+    {:catch err}
+      <tr>
+        <th>From</th>
+        <td>-</td>
+      </tr>
+      <tr>
+        <th>To</th>
+        <td>-</td>
+      </tr>
+    {/await}
   </tbody>
 </table>
 

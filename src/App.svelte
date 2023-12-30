@@ -6,23 +6,26 @@
 
   import Busses from "./lib/AllBusses/Busses.svelte"
   import Footer from "./lib/components/Footer.svelte"
+  import CopyToClipboard from "./lib/components/CopyToClipboard.svelte"
 </script>
 
-<div class="text-slate-400">
+<div class="text-gray-400">
   <nav class="w-full px-4 flex items-center py-2">
-    <div class="max-w-page mx-auto w-full">
+    <div class="max-w-page mx-auto w-full px-4">
       <a class="text-xl font-bold text-white" href="https://www.ownkng.dev/"
         >OwnKng</a
       >
     </div>
   </nav>
-  <header class="max-w-content mx-auto px-4 pb-8 pt-12 gap-4">
+  <header class="max-w-content mx-auto px-4 pt-12 gap-4">
     <h1 class="text-4xl md:text-6xl">How are London's bus routes connected?</h1>
-  </header>
-  <article>
-    <section class="w-full max-w-content px-4 mx-auto">
+    <div class="w-full w-full flex flex-col gap-1 pt-4 pb-1">
       <span class="text-sm text-light">Jan 2024</span>
-      <div class="h-1 border-t border-midnight-25" />
+      <CopyToClipboard link="https://www.ownkng.dev/london-bus-routes" />
+    </div>
+  </header>
+  <article class="pt-8">
+    <section class="w-full max-w-content px-4 mx-auto">
       <p class="text-xl text-heading font-light pt-4">
         There are more than 19,000 bus stops in London and around 700 routes
         operating from them. A typical route consists of between 40 and 60
@@ -34,21 +37,15 @@
         create.
       </p>
       <p>
-        A typical bus route connects at least once to <span class="highlight"
-          >between 20 to 40 other routes
-        </span>
-        while circumventing its stops. Many routes will share multiple stops with
-        the same route - so around
-        <span class="highlight"
-          >half of London bus routes share almost 90% of their stops</span
-        >
-        with at least one other bus route.
+        A typical bus route connects at least once to between 20 to 40 other
+        routes while navigating its stops. Many routes will share multiple stops
+        with the same route - so around half of London bus routes share almost
+        90% of their stops with at least one other bus route.
       </p>
       <p>
         On this analysis, some of London's least connected routes include the
         <a href="https://tfl.gov.uk/bus/route/399" target="_blank">399</a>,
-        which is connected to just six other routes and shares just under a
-        quarter of its stops; and the
+        which shares just under a quarter of its stops; and the
         <a href="https://tfl.gov.uk/bus/route/w5">W5</a>, which shares just over
         a quarter.
       </p>
