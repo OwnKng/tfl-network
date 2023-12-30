@@ -2,59 +2,129 @@
   import "@fontsource/source-code-pro"
   import "@fontsource/nunito"
   import "@fontsource/nunito/800.css"
+  import "@fontsource/nunito/200.css"
 
   import Busses from "./lib/AllBusses/Busses.svelte"
-  import Histograms from "./lib/Histograms/Histograms.svelte"
+  import Footer from "./lib/components/Footer.svelte"
 </script>
 
-<div class="text-gray-300 pt-4 pb-8">
-  <nav class="w-full px-4">
-    <div class="max-w-page mx-auto">
+<div class="text-slate-400">
+  <nav class="w-full px-4 flex items-center py-2">
+    <div class="max-w-page mx-auto w-full">
       <a class="text-xl font-bold text-white" href="https://www.ownkng.dev/"
         >OwnKng</a
       >
     </div>
   </nav>
-  <header class="max-w-content mx-auto px-4 pb-4 pt-12 flex flex-col gap-4">
-    <h1 class="text-4xl md:text-6xl">How are London's busses connected?</h1>
-    <p class="text-2xl">A network analysis of bus routes</p>
+  <header class="max-w-content mx-auto px-4 pb-8 pt-12 gap-4">
+    <h1 class="text-4xl md:text-6xl">How are London's bus routes connected?</h1>
   </header>
-  <article class="flex flex-col gap-4">
-    <section class="w-full max-w-content px-4 mx-auto flex flex-col gap-2">
-      <p class="text-lg">
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  <article>
+    <section class="w-full max-w-content px-4 mx-auto">
+      <span class="text-sm text-light">Jan 2024</span>
+      <div class="h-1 border-t border-midnight-25" />
+      <p class="text-xl text-heading font-light pt-4">
+        There are more than 19,000 bus stops in London and around 700 routes
+        operating from them. A typical route consists of between 40 and 60
+        stops.
+        <sup>
+          <a id="inline-1" class="text-xs" href="#footnote-1">[1]</a>
+        </sup> Each stop that one route shares with another creates a connection
+        between routes. This analysis explores the network that these connections
+        create.
       </p>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat.
+        A typical bus route connects at least once to <span class="highlight"
+          >between 20 to 40 other routes
+        </span>
+        while circumventing its stops. Many routes will share multiple stops with
+        the same route - so around
+        <span class="highlight"
+          >half of London bus routes share almost 90% of their stops</span
+        >
+        with at least one other bus route.
       </p>
-      <p class="text-lg">
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      <p>
+        On this analysis, some of London's least connected routes include the
+        <a href="https://tfl.gov.uk/bus/route/399" target="_blank">399</a>,
+        which is connected to just six other routes and shares just under a
+        quarter of its stops; and the
+        <a href="https://tfl.gov.uk/bus/route/w5">W5</a>, which shares just over
+        a quarter.
       </p>
     </section>
     <Busses />
-    <section class="w-full max-w-content px-4 mx-auto flex flex-col gap-2">
-      <h2>Data and Methodology</h2>
-      <div class="flex flex-col gap-1">
+    <section>
+      <div class="w-full max-w-content mx-auto px-4">
         <p>
-          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-          dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-          proident, sunt in culpa qui officia deserunt mollit anim id est
-          laborum.
+          However, not all connections are equally important - a route that
+          shares a single stop with a bus that connects to many other routes is
+          more useful than sharing many stops with lots of poorly connected
+          busses.
         </p>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
+          To measure these connections across multiple degrees, we can calculate
+          the <a href="https://en.wikipedia.org/wiki/Eigenvector_centrality"
+            >eigenvectors
+          </a>
+          for each route.<sup><a id="inline-2" href="#footnote-2">[2]</a></sup>
+          The routes with the highest eigenvectors tend to be the longer routes that
+          connect parts of Zones 2 or 3 via Central London - including the
+          <a href="https://tfl.gov.uk/bus/route/148" target="_blank"> 148 </a>,
+          the <a href="https://tfl.gov.uk/bus/route/35" target="_blank">35</a>,
+          and the
+          <a href="https://tfl.gov.uk/bus/route/2" target="_blank">2</a>
+          .
+        </p>
+        <p>
+          Those bus numbers with the smallest eigenvectors tend to be the
+          shorter routes on the very edges of London, such as the
+          <a href="https://tfl.gov.uk/bus/route/608" target="_blank">608</a>,
+          <a href="https://tfl.gov.uk/bus/route/346" target="_blank">346</a>, or
+          the
+          <a href="https://tfl.gov.uk/bus/route/372" target="_blank">372</a>.
         </p>
       </div>
     </section>
+    <section class="w-full max-w-content px-4 mx-auto">
+      <h2 class="text-xl">Data and Methodology</h2>
+      <p>
+        The data for piece was extracted using the
+        <a href="https://api.tfl.gov.uk/" target="_blank">
+          Transport for London API
+        </a>. The analysis was undertaken in Python, mainly using
+        <a href="https://pandas.pydata.org/" target="_blank"> Pandas </a>
+        and
+        <a href="https://networkx.org/" target="_blank"> NetworkX </a>
+        .
+      </p>
+      <p>
+        Night busses were excluded from the analysis, as lots of night bus
+        routes are similar to their daytime counterparts and most bus usage
+        occurs during the day.
+      </p>
+      <p>
+        This page was built with <a href="https://svelte.dev/">Svelte</a>. The
+        graphs and visual analysis were all created using
+        <a href="https://d3js.org/">D3</a>. Code available in this GitHub Repo.
+      </p>
+    </section>
+    <aside class="w-full max-w-content mx-auto px-4 pt-6">
+      <h3>Notes</h3>
+      <ul class="text-sm text-slate-400 flex flex-col gap-2">
+        <ol id="footnote-1">
+          <a href="#inline-1">1.</a> This is counting all unique stops in both directions,
+          regardless of which stand or letter of stop the route stops at. While most
+          stops comprise several stands or letters, this analysis considers all stands
+          or letters to be part of the same stop.
+        </ol>
+        <ol id="footnote-2">
+          <a href="#inline-2">2.</a> As the eigenvectors are heavily skewed towards
+          the left of the distribution, the graph above shows the log of the eigenvectors
+          rescaled to between 0 and 100.
+        </ol>
+      </ul>
+    </aside>
   </article>
+  <Footer />
 </div>

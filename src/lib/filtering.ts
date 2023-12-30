@@ -1,4 +1,4 @@
-import { edges, nodes } from "../assets/busses"
+import { edges } from "../assets/edges"
 
 export function getEdges(id: string, n = 10): string[] {
   const allEdges = edges.filter((e) => e.source === id)
@@ -9,8 +9,4 @@ export function getEdges(id: string, n = 10): string[] {
     .sort((a, b) => b.value - a.value)
     .slice(0, n)
     .map((e) => e.target)
-}
-
-export function getCentralityScore(id: string): number {
-  return nodes.find((n) => n.id === id)?.centrality_group || 0
 }

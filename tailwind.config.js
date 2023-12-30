@@ -10,11 +10,12 @@ export default {
         "midnight-75": "var(--colors-midnight-75)",
         "midnight-50": "var(--colors-midnight-50)",
         "midnight-25": "var(--colors-midnight-25)",
+        heading: "var(--colors-heading)",
       },
       maxWidth: {
         dashboard: "1230px",
         page: "1230px",
-        content: "720px",
+        content: "680px",
       },
       height: {
         graph: "500px",

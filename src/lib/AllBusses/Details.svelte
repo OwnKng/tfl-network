@@ -4,7 +4,6 @@
   import { max } from "d3-array"
   import { fly } from "svelte/transition"
   import { createEventDispatcher, afterUpdate } from "svelte"
-  import { getCentralityScore } from "../filtering"
 
   export let lineId: string
   export let edges: { source: string; target: string; value: number }[] = []
@@ -28,10 +27,6 @@
 
 <div class="flex flex-col gap-2 h-map">
   <Line {lineId} />
-  <div class="flex flex-col gap-2 rounded py-1 row-span-1">
-    <h3 class="text-white">Connectivity</h3>
-    <p>{getCentralityScore(lineId)}</p>
-  </div>
   <div class="flex flex-col gap-2 row-span-4">
     <h4 class="text-sm">Shared stops per route</h4>
     <div class="w-full h-full relative">
@@ -55,12 +50,12 @@
                 class="absolute left-0 top-0 bottom-0 shadow bg-midnight-50 z-10 rounded transition-all group-hover:bg-midnight-25"
                 style="width: {xScale(node.value)}px;"
               />
-              <p class="z-20">
+              <span class="z-20">
                 {node.target}
-              </p>
-              <p class="z-20">
+              </span>
+              <span class="z-20">
                 {node.value}
-              </p>
+              </span>
             </button>
           {/each}
         </div>

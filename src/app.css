@@ -5,21 +5,14 @@
 @layer base {
   :root {
     --colors-night: #0e0f12;
-    --colors-white: #f1f5f2;
+    --colors-white: #f1f5f9;
     --colors-offWhite: #d0d4dc;
-    --colors-light-black: #1b1e28;
-    --colors-gunmetal: #292e3d;
-    --colors-uranus: #abd2fa;
-    --colors-jasmine: #ffd275;
-    --colors-emerald: #3ddc97;
-    --colors-primary: #38bdf8;
-    --colors-prussian-blue: #171c1f;
-    --colors-blue: #8de4ff;
+    --colors-primary: #5de4c7;
 
-    --colors-midnight: #030712;
-    --colors-midnight-75: #030712;
-    --colors-midnight-50: #111827;
-    --colors-midnight-25: #1f2937;
+    --colors-midnight: #0e0f13;
+    --colors-midnight-75: #1b1e28;
+    --colors-midnight-50: #292e3d;
+    --colors-midnight-25: #3a3f4b;
 
     /* for graphs */
     --colors-text: #f1f5f2;
@@ -75,4 +68,23 @@ h5 {
 
 .Panel line {
   stroke: var(--colors-grid);
+}
+
+article a {
+  text-decoration: underline;
+  text-decoration-color: var(--colors-primary);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+  color: var(--colors-heading);
+}
+
+article h2 {
+  color: var(--colors-heading);
+  margin-top: 3rem;
+}
+
+article p {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  margin-bottom: 1rem;
 }

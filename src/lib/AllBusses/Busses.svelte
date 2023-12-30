@@ -1,6 +1,7 @@
 <script lang="ts">
   import Network from "./Network.svelte"
-  import { nodes, edges } from "../../assets/busses"
+  import { edges } from "../../assets/edges"
+  import { nodes } from "../../assets/nodes"
   import { createCombobox, melt } from "@melt-ui/svelte"
   import { fly } from "svelte/transition"
   import { writable } from "svelte/store"
@@ -61,10 +62,10 @@
 </script>
 
 <section
-  class="w-full mx-auto px-4 border-t py-4 border-b border-midnight-50 flex flex-col gap-4"
+  class="w-full mx-auto px-4 border-t py-4 bg-midnight-75 border-b border-midnight-50 flex flex-col gap-4 mb-4"
 >
   <div class="w-full max-w-dashboard mx-auto flex flex-col gap-4 py-6">
-    <div class="w-full sticky top-2 z-40">
+    <div class="w-full sticky top-2 z-50 max-w-content mx-auto shadow-md">
       <div class="relative flex justify-between items-center">
         <!-- svelte-ignore a11y-label-has-associated-control - $label contains the 'for' attribute -->
         <label use:melt={$label}>
@@ -72,7 +73,7 @@
         </label>
         <input
           use:melt={$input}
-          class="flex w-full py-4 px-2 w-full items-center justify-between focus:outline-none bg-midnight-50 border border-midnight-25 rounded caret-primary carat-2"
+          class="flex w-full py-4 px-2 items-center justify-between focus:outline-none bg-midnight-50 border border-midnight-25 rounded caret-primary"
           placeholder="Select a bus route"
         />
         {#if $selected}
@@ -86,7 +87,7 @@
       </div>
       {#if $open}
         <ul
-          class="z-40 flex max-h-[300px] flex-col overflow-hidden"
+          class="z-50 flex max-h-[300px] flex-col overflow-hidden"
           use:melt={$menu}
           transition:fly={{ duration: 150, y: -5 }}
         >

@@ -67,9 +67,9 @@
 
 <div class="w-full h-full flex flex-col gap-2">
   <div class="flex justify-between items-center w-full text-sm font-bold">
-    <h3 style="margin-left: {dimensions.margins.left}px;">
+    <h4 style="margin-left: {dimensions.margins.left}px;">
       {title}
-    </h3>
+    </h4>
     <span
       class="bg-midnight-50 text-primary rounded px-2 text-xs py-1 shadow-sm border border-midnight-25"
     >
