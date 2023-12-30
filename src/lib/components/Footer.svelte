@@ -23,3 +23,9 @@
     </div>
   </div>
 </footer>
+
+<style>
+  footer a {
+    font-size: 120%;
+  }
+</style>
