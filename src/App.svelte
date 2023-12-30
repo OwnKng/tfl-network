@@ -11,7 +11,7 @@
 
 <div class="text-gray-400">
   <nav class="w-full px-4 flex items-center py-2">
-    <div class="max-w-page mx-auto w-full px-4">
+    <div class="max-w-page mx-auto w-full">
       <a class="text-xl font-bold text-white" href="https://www.ownkng.dev/"
         >OwnKng</a
       >
