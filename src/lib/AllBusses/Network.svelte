@@ -8,7 +8,7 @@
     forceCollide,
   } from "d3-force"
   import { scaleSqrt } from "d3-scale"
-  import { min, max } from "d3-array"
+  import { max } from "d3-array"
   import { Delaunay } from "d3-delaunay"
   import { bounds } from "../utils"
   import { drawSimulation } from "../simulation"
@@ -139,9 +139,9 @@
       edges: highlighted.edges,
       edgeWidth: (d) => widthScale(getValue(d)),
       nodeRadius: (d) => radiusScale(getConnections(d)),
-      edgeColor: () => "#ef4444",
+      edgeColor: () => "#7dd3fc",
       nodeStroke: () => "#24282f",
-      nodeFill: () => "#f87171",
+      nodeFill: () => "#38bdf8",
       nodeLabelColor: () => "#0e0f12",
       showLabels: true,
       nodeLabel: (node) => node.id,
@@ -166,7 +166,7 @@
       edgeWidth: (d) => widthScale(getValue(d)),
       nodeRadius: (d) => radiusScale(getConnections(d)),
       nodeStroke: () => "#1f2937",
-      nodeFill: () => "#d1d5db",
+      nodeFill: () => "#e0f2fe",
       nodeLabelColor: () => "#0e0f12",
       showLabels: true,
       nodeLabel: (node) => (getConnections(node) > 50 ? node.id : ""),

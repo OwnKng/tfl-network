@@ -19,7 +19,7 @@ export default {
       height: {
         graph: "500px",
         map: "720px",
-        facet: "240px",
+        facet: "220px",
         "graph-sm": "380px",
       },
     },

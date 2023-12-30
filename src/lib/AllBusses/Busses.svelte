@@ -6,14 +6,12 @@
   import { writable } from "svelte/store"
   import Details from "./Details.svelte"
   import Histograms from "../Histograms/Histograms.svelte"
+  import { afterUpdate } from "svelte"
 
-  const selected = writable(
-    null as {
-      value: string
-      label: string
-      disabled: boolean
-    } | null
-  )
+  const params = new URLSearchParams(window.location.search)
+  const route = params.get("route") ?? "148"
+
+  const selected = writable({ value: route, label: route, disabled: false })
 
   const {
     elements: { menu, input, option, label },
@@ -55,6 +53,11 @@
       disabled: false,
     })
   }
+
+  afterUpdate(() => {
+    params.set("route", $selected?.value ?? "")
+    window.history.replaceState({}, "", `${window.location.pathname}?${params}`)
+  })
 </script>
 
 <section
