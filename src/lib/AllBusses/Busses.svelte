@@ -28,10 +28,12 @@
   }
 
   $: filtered = $touchedInput
-    ? nodes.filter(({ id }) => {
-        const normalizedInput = $inputValue.toLowerCase()
-        return id.toLowerCase().startsWith(normalizedInput)
-      })
+    ? nodes
+        .filter(({ id }) => {
+          const normalizedInput = $inputValue.toLowerCase()
+          return id.toLowerCase().startsWith(normalizedInput)
+        })
+        .sort((a, b) => a.id.length - b.id.length)
     : nodes
 
   let selectedNode: string | null = "243"
