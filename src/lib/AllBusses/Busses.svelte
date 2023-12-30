@@ -110,7 +110,7 @@
                 class="relative cursor-pointer scroll-my-2 px-2 py-2 hover:bg-midnight-25 data-[highlighted]:bg-midnight-25 data-[disabled]:opacity-50"
               >
                 <div>
-                  <span class="block text-sm opacity-75">{node.id}</span>
+                  <span class="block opacity-75">{node.id}</span>
                 </div>
               </li>
             {:else}

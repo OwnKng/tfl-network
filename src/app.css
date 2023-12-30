@@ -88,3 +88,8 @@ article p {
   line-height: 1.75rem;
   margin-bottom: 1rem;
 }
+
+html,
+* {
+  scroll-behavior: smooth;
+}
