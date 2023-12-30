@@ -19,14 +19,14 @@
 
 <button
   aria-label="Copy this site url to clipboard"
-  class="bg-primary text-midnight w-8 h-8 px-1 py-1 flex justify-center rounded-full items-center"
+  class="bg-primary text-midnight w-10 h-10 flex justify-center rounded-full items-center"
   on:click={copyToClipboard}
 >
   {#if success}
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
+      width="20"
+      height="20"
       fill="currentColor"
       class="bi bi-check"
       viewBox="0 0 16 16"
