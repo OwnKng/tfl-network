@@ -108,19 +108,19 @@
     </section>
     <aside class="w-full max-w-content mx-auto px-4 pt-6">
       <h3>Notes</h3>
-      <ul class="text-sm text-slate-400 flex flex-col gap-2">
-        <ol id="footnote-1">
+      <ol class="text-sm text-slate-400 flex flex-col gap-2">
+        <li id="footnote-1">
           <a href="#inline-1">1.</a> This is counting all unique stops in both directions,
           regardless of which stand or letter of stop the route stops at. While most
           stops comprise several stands or letters, this analysis considers all stands
           or letters to be part of the same stop.
-        </ol>
-        <ol id="footnote-2">
+        </li>
+        <li id="footnote-2">
           <a href="#inline-2">2.</a> As the eigenvectors are heavily skewed towards
           the left of the distribution, the graph above shows the log of the eigenvectors
           rescaled to between 0 and 100.
-        </ol>
-      </ul>
+        </li>
+      </ol>
     </aside>
   </article>
   <Footer />

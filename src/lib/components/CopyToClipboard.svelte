@@ -18,6 +18,7 @@
 </script>
 
 <button
+  aria-label="Copy this site url to clipboard"
   class="bg-primary text-midnight w-8 h-8 px-1 py-1 flex justify-center rounded-full items-center"
   on:click={copyToClipboard}
 >

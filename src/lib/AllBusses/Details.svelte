@@ -28,7 +28,7 @@
 <div class="flex flex-col gap-2">
   <Line {lineId} />
   <div class="flex flex-col gap-2 row-span-4">
-    <h4 class="text-sm">Shared stops per route</h4>
+    <h3 class="text-sm">Shared stops per route</h3>
     <div class="w-full h-full relative">
       <div
         class="absolute w-full left-0 h-8 bottom-0 w-full bg-gradient-to-t from-midnight-75 z-40"
