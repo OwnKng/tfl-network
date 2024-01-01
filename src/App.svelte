@@ -21,7 +21,7 @@
     <h1 class="text-4xl md:text-6xl">How are London's bus routes connected?</h1>
     <div class="w-full w-full flex flex-col gap-1 pt-4 pb-1">
       <span class="text-sm text-light">Jan 2024</span>
-      <CopyToClipboard link="https://www.ownkng.dev/london-bus-routes" />
+      <CopyToClipboard link="https://network.ownkng.dev/" />
     </div>
   </header>
   <article class="pt-8">
