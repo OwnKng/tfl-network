@@ -18,7 +18,7 @@
     </div>
   </nav>
   <header class="max-w-content mx-auto px-4 pt-12 gap-4">
-    <h1 class="text-4xl md:text-6xl">How are London's bus routes connected?</h1>
+    <h1 class="text-5xl md:text-6xl">How are London's bus routes connected?</h1>
     <div class="w-full w-full flex flex-col gap-1 pt-4 pb-1">
       <span class="text-sm text-light">Jan 2024</span>
       <CopyToClipboard link="https://network.ownkng.dev/" />
@@ -38,16 +38,16 @@
       </p>
       <p>
         A typical bus route connects at least once to between 20 to 40 other
-        routes while navigating its stops. Many routes will share multiple stops
-        with the same route - so around half of London bus routes share almost
-        90% of their stops with at least one other bus route.
+        routes while navigating its stops. Many routes share multiple stops with
+        their connected routes - so around half of London bus routes share
+        almost 90% of their stops with at least one other route.
       </p>
       <p>
         On this analysis, some of London's least connected routes include the
-        <a href="https://tfl.gov.uk/bus/route/399" target="_blank">399</a>,
-        which shares just under a quarter of its stops; and the
-        <a href="https://tfl.gov.uk/bus/route/w5">W5</a>, which shares just over
-        a quarter.
+        <a href="https://tfl.gov.uk/bus/route/399" target="_blank">399</a> and
+        the
+        <a href="https://tfl.gov.uk/bus/route/W5" target="_blank">W5</a>, which
+        both share around a quarter of their stops with other routes.
       </p>
     </section>
     <Busses />
@@ -62,7 +62,7 @@
         <p>
           To measure these connections across multiple degrees, we can calculate
           the <a href="https://en.wikipedia.org/wiki/Eigenvector_centrality"
-            >eigenvectors
+            >eigenvector centrality
           </a>
           for each route.<sup><a id="inline-2" href="#footnote-2">[2]</a></sup>
           The routes with the highest eigenvectors tend to be the longer routes that
@@ -89,7 +89,7 @@
         The data for piece was extracted using the
         <a href="https://api.tfl.gov.uk/" target="_blank">
           Transport for London API
-        </a>. The analysis was undertaken in Python, mainly using
+        </a>. The analysis was undertaken in Python, using
         <a href="https://pandas.pydata.org/" target="_blank"> Pandas </a>
         and
         <a href="https://networkx.org/" target="_blank"> NetworkX </a>
@@ -103,7 +103,10 @@
       <p>
         This page was built with <a href="https://svelte.dev/">Svelte</a>. The
         graphs and visual analysis were all created using
-        <a href="https://d3js.org/">D3</a>. Code available in this GitHub Repo.
+        <a href="https://d3js.org/">D3</a>. Code available in this
+        <a href="https://github.com/OwnKng/tfl-network" target="_blank">
+          GitHub Repo.
+        </a>
       </p>
     </section>
     <aside class="w-full max-w-content mx-auto px-4 pt-6">

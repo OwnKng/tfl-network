@@ -121,8 +121,19 @@
       {/if}
     </div>
     <div class="flex flex-col gap-2 xl:grid xl:grid-cols-8 xl:gap-4">
-      <div class="col-span-6 h-map max-h-screen">
-        <Network {nodes} links={edges} {selectedNode} on:click={handleClick} />
+      <div class="col-span-6">
+        <div class="h-map max-h-screen">
+          <Network
+            {nodes}
+            links={edges}
+            {selectedNode}
+            on:click={handleClick}
+          />
+        </div>
+        <span class="text-xs text-gray-500">
+          Circle radius shows the number of connected routes, while edge
+          thickness shows the number of shared stops between routes.</span
+        >
       </div>
       <div class="col-span-2 flex flex-col gap-2">
         {#if selectedNode}
@@ -134,6 +145,7 @@
         {/if}
       </div>
     </div>
+
     <Histograms selected={selectedNode} />
   </div>
 </section>
